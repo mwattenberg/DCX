@@ -13,6 +13,8 @@
 void init()
 {
 	DCX_ISOP_init(800000);
+	DCX_enableSpreadSpectrum();
+	
 	DCX_ISOP_start();
 }
 
@@ -30,10 +32,8 @@ int main(void)
     // Main application loop
     for (;;)
     {
-        // Application code
-    	DCX_ISOP_setDutyP(DCX_ISOP_config.duty_p);
-    	DCX_ISOP_setDeadtimePrimary(DCX_ISOP_config.deadtime_Prim);
-    	DCX_ISOP_setDeadtimeSecondary(DCX_ISOP_config.deadtime_Sec);
+//    	DCX_ISOP_setDeadtimePrimary(DCX_ISOP_config.deadtime_Prim);
+//    	DCX_ISOP_setDeadtimeSecondary(DCX_ISOP_config.deadtime_Sec);
     }
 }
 

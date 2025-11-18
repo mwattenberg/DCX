@@ -377,13 +377,13 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="5"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
                         <Param id="EnableCompare1Swap" value="false"/>
                         <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
-                        <Param id="InterruptTC" value="false"/>
+                        <Param id="InterruptTC" value="true"/>
                         <Param id="InvertPwm" value="false"/>
                         <Param id="InvertPwm_n" value="false"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -391,7 +391,7 @@
                         <Param id="Period0" value="32768"/>
                         <Param id="Period1" value="32768"/>
                         <Param id="Period_Dithering" value="128"/>
-                        <Param id="PwmAlignment" value="CY_TCPWM_PWM_CENTER_ALIGN"/>
+                        <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
                         <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -444,7 +444,7 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="5"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
                         <Param id="EnableCompare1Swap" value="false"/>
                         <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
@@ -458,7 +458,7 @@
                         <Param id="Period0" value="32768"/>
                         <Param id="Period1" value="32768"/>
                         <Param id="Period_Dithering" value="128"/>
-                        <Param id="PwmAlignment" value="CY_TCPWM_PWM_CENTER_ALIGN"/>
+                        <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
                         <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
