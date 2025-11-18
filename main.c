@@ -25,7 +25,7 @@ int main(void)
 
     // Initialize DCX_ISOP
     init();
-    test;
+
 
     // Main application loop
     for (;;)

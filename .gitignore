@@ -35,6 +35,10 @@ Release/
 #.mtbLaunchConfigs/
 makefile.init
 
+.clangd
+.ninja_log
+./settings/language.settings.xml
+
 # Visual Studio Code
 openocd.tcl
 .vscode/
