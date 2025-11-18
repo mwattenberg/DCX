@@ -1,0 +1,10 @@
+[
+    {
+        "asset-name": "cmsis",
+        "locked-commit": "release-v5.8.2"
+    },
+    {
+        "asset-name": "syspm-callbacks-psc3",
+        "locked-commit": "release-v1.0.0"
+    }
+]
