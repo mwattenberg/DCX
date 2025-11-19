@@ -48,8 +48,8 @@ bsp-assistant:
 	$(CY_TOOL_mtblaunch_EXE_ABS) --project . --short-name bsp-assistant
 .PHONY: bsp-assistant
 
-CY_HELP_bsp-assistant=Launches the BSP Assistant 1.50 GUI
-CY_HELP_bsp-assistant_VERBOSE=Launches the BSP Assistant 1.50 GUI. Check the BSP Assistant 1.50 User Guide for more information.
+CY_HELP_bsp-assistant=Launches the BSP Assistant 1.40 GUI
+CY_HELP_bsp-assistant_VERBOSE=Launches the BSP Assistant 1.40 GUI. Check the BSP Assistant 1.40 User Guide for more information.
 mtb_help_tool_bsp-assistant:
 	@:
 	$(info $(MTB__SPACE)bsp-assistant       $(CY_HELP_bsp-assistant))
@@ -62,8 +62,8 @@ config:
 	$(CY_TOOL_mtblaunch_EXE_ABS) --project . --short-name device-configurator
 .PHONY: config
 
-CY_HELP_config=Launches the Device Configurator 5.50 GUI for the target's modus file
-CY_HELP_config_VERBOSE=Launches the Device Configurator 5.50 GUI. Check the Device Configurator 5.50 User Guide for more information.
+CY_HELP_config=Launches the Device Configurator 5.30 GUI for the target's modus file
+CY_HELP_config_VERBOSE=Launches the Device Configurator 5.30 GUI. Check the Device Configurator 5.30 User Guide for more information.
 mtb_help_tool_config:
 	@:
 	$(info $(MTB__SPACE)config              $(CY_HELP_config))
@@ -76,8 +76,8 @@ device-configurator:
 	$(CY_TOOL_mtblaunch_EXE_ABS) --project . --short-name device-configurator
 .PHONY: device-configurator
 
-CY_HELP_device-configurator=Launches the Device Configurator 5.50 GUI for the target's modus file
-CY_HELP_device-configurator_VERBOSE=Launches the Device Configurator 5.50 GUI. Check the Device Configurator 5.50 User Guide for more information.
+CY_HELP_device-configurator=Launches the Device Configurator 5.30 GUI for the target's modus file
+CY_HELP_device-configurator_VERBOSE=Launches the Device Configurator 5.30 GUI. Check the Device Configurator 5.30 User Guide for more information.
 mtb_help_tool_device-configurator:
 	@:
 	$(info $(MTB__SPACE)device-configurator $(CY_HELP_device-configurator))
@@ -90,8 +90,8 @@ modlibs:
 	$(CY_TOOL_mtblaunch_EXE_ABS) --project . --short-name library-manager
 .PHONY: modlibs
 
-CY_HELP_modlibs=Launches the Library Manager 2.50 GUI
-CY_HELP_modlibs_VERBOSE=Launches the Library Manager 2.50 GUI. Check the Library Manager 2.50 User Guide for more information.
+CY_HELP_modlibs=Launches the Library Manager 2.40 GUI
+CY_HELP_modlibs_VERBOSE=Launches the Library Manager 2.40 GUI. Check the Library Manager 2.40 User Guide for more information.
 mtb_help_tool_modlibs:
 	@:
 	$(info $(MTB__SPACE)modlibs             $(CY_HELP_modlibs))
@@ -104,8 +104,8 @@ library-manager:
 	$(CY_TOOL_mtblaunch_EXE_ABS) --project . --short-name library-manager
 .PHONY: library-manager
 
-CY_HELP_library-manager=Launches the Library Manager 2.50 GUI
-CY_HELP_library-manager_VERBOSE=Launches the Library Manager 2.50 GUI. Check the Library Manager 2.50 User Guide for more information.
+CY_HELP_library-manager=Launches the Library Manager 2.40 GUI
+CY_HELP_library-manager_VERBOSE=Launches the Library Manager 2.40 GUI. Check the Library Manager 2.40 User Guide for more information.
 mtb_help_tool_library-manager:
 	@:
 	$(info $(MTB__SPACE)library-manager     $(CY_HELP_library-manager))
@@ -118,8 +118,8 @@ smartio-configurator:
 	$(CY_TOOL_mtblaunch_EXE_ABS) --project . --short-name smartio-configurator
 .PHONY: smartio-configurator
 
-CY_HELP_smartio-configurator=Launches the Smart I/O Configurator 4.50 GUI for the target's modus file
-CY_HELP_smartio-configurator_VERBOSE=Launches the Smart I/O Configurator 4.50 GUI. Check the Smart I/O Configurator 4.50 User Guide for more information.
+CY_HELP_smartio-configurator=Launches the Smart I/O Configurator 4.40 GUI for the target's modus file
+CY_HELP_smartio-configurator_VERBOSE=Launches the Smart I/O Configurator 4.40 GUI. Check the Smart I/O Configurator 4.40 User Guide for more information.
 mtb_help_tool_smartio-configurator:
 	@:
 	$(info $(MTB__SPACE)smartio-configurator $(CY_HELP_smartio-configurator))

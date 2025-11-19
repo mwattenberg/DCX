@@ -27,6 +27,11 @@ void DCX_IsrHandler()
 {
 	static int32_t counter = 0;
 	static int32_t counterDirection = 1;
+	static uint32_t pwmCycleCount = 0;
+	
+	// Target: 9 kHz modulation rate
+	// Advance pattern every ~89 PWM cycles (800kHz / 9kHz ≈ 89)
+	const uint32_t advanceEvery = 89;
 	
 	Cy_TCPWM_PWM_SetPeriod1(PWM_PRIM_HW, PWM_PRIM_NUM, DCX_ISOP_config.period0 + counter);
 	Cy_TCPWM_PWM_SetPeriod1(PWM_SEC_HW, PWM_SEC_NUM, DCX_ISOP_config.period0 + counter);
@@ -36,9 +41,15 @@ void DCX_IsrHandler()
 	
 	Cy_TrigMux_SwTrigger(TRIG_OUT_MUX_10_TCPWM0_TR_IN6, CY_TRIGGER_TWO_CYCLES);
 	
-	counter = counter + counterDirection;
-	if(abs(counter) == maxSpreadSpectrumCounts)
-		counterDirection = counterDirection * -1;
+	// Only advance the spread spectrum pattern every N PWM cycles
+	pwmCycleCount++;
+	if(pwmCycleCount >= advanceEvery)
+	{
+		pwmCycleCount = 0;
+		counter = counter + counterDirection;
+		if(abs(counter) == maxSpreadSpectrumCounts)
+			counterDirection = counterDirection * -1;
+	}
 	
 		/* Get all the enabled pending interrupts */
     uint32_t interrupts = Cy_TCPWM_GetInterruptStatusMasked(PWM_PRIM_HW, PWM_PRIM_NUM);
