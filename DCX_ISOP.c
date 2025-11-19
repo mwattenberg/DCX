@@ -29,9 +29,10 @@ void DCX_IsrHandler()
 	static int32_t counterDirection = 1;
 	static uint32_t pwmCycleCount = 0;
 	
-	// Target: 9 kHz modulation rate
-	// Advance pattern every ~89 PWM cycles (800kHz / 9kHz ≈ 89)
-	const uint32_t advanceEvery = 89;
+	// Target: 9 kHz pattern repeat frequency
+	// Pattern has 26 steps (±6 counts = 13 up + 13 down)
+	// Advance pattern every ~3 PWM cycles (800kHz / (9kHz × 26 steps) ≈ 3.4)
+	const uint32_t advanceEvery = 3;
 	
 	Cy_TCPWM_PWM_SetPeriod1(PWM_PRIM_HW, PWM_PRIM_NUM, DCX_ISOP_config.period0 + counter);
 	Cy_TCPWM_PWM_SetPeriod1(PWM_SEC_HW, PWM_SEC_NUM, DCX_ISOP_config.period0 + counter);
