@@ -3,10 +3,10 @@
 # Any edits to this file will be lost the next time the library manager is run or
 # the next time 'make getlibs' is run.
 #
-bsp-assistant capsense-configurator capsense-tuner config device-configurator dfuh-tool config_ezpd ez-pd-configurator modlibs library-manager qspi-configurator seglcd-configurator smartio-configurator config_usbdev usbdev-configurator power-conversion-configurator :
-	make -C hv_ibc_800v_50v $@
+bsp-assistant capsense-configurator capsense-tuner config device-configurator dfuh-tool config_ezpd ez-pd-configurator modlibs library-manager qspi-configurator seglcd-configurator smartio-configurator config_usbdev usbdev-configurator edge-protect-configurator :
+	make -C DCX $@
 
 config_bt bt-configurator config_lin lin-configurator secure-policy-configurator :
 	$(error $@ configurator cannot be executed at the application level. Run this command from the desired project directory.)
 
-.PHONY: bsp-assistant config_bt bt-configurator capsense-configurator capsense-tuner config device-configurator dfuh-tool config_ezpd ez-pd-configurator modlibs library-manager config_lin lin-configurator qspi-configurator seglcd-configurator smartio-configurator config_usbdev usbdev-configurator power-conversion-configurator secure-policy-configurator
+.PHONY: bsp-assistant config_bt bt-configurator capsense-configurator capsense-tuner config device-configurator dfuh-tool config_ezpd ez-pd-configurator modlibs library-manager config_lin lin-configurator qspi-configurator seglcd-configurator smartio-configurator config_usbdev usbdev-configurator secure-policy-configurator edge-protect-configurator

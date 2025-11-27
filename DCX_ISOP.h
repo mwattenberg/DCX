@@ -42,6 +42,7 @@ typedef struct DCX_ISOP_config
 /*Global variable declaration*/
 
 extern DCX_ISOP_config_t DCX_ISOP_config;
+#define PWM_PRI_A_TOP_IRQ tcpwm_0_interrupts_256_IRQn
 
 /*Function Prototypes*/
 

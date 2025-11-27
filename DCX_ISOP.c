@@ -34,11 +34,11 @@ void DCX_IsrHandler()
 	// Advance pattern every ~3 PWM cycles (800kHz / (9kHz × 26 steps) ≈ 3.4)
 	const uint32_t advanceEvery = 3;
 	
-	Cy_TCPWM_PWM_SetPeriod1(PWM_PRIM_HW, PWM_PRIM_NUM, DCX_ISOP_config.period0 + counter);
-	Cy_TCPWM_PWM_SetPeriod1(PWM_SEC_HW, PWM_SEC_NUM, DCX_ISOP_config.period0 + counter);
+	Cy_TCPWM_PWM_SetPeriod1(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, DCX_ISOP_config.period0 + counter);
+	Cy_TCPWM_PWM_SetPeriod1(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, DCX_ISOP_config.period0 + counter);
 	
-	Cy_TCPWM_PWM_SetCompare0BufVal(PWM_PRIM_HW, PWM_PRIM_NUM, (DCX_ISOP_config.period0 + counter)/2);
-	Cy_TCPWM_PWM_SetCompare0BufVal(PWM_SEC_HW, PWM_SEC_NUM, (DCX_ISOP_config.period0 + counter)/2);
+	Cy_TCPWM_PWM_SetCompare0BufVal(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, (DCX_ISOP_config.period0 + counter)/2);
+	Cy_TCPWM_PWM_SetCompare0BufVal(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, (DCX_ISOP_config.period0 + counter)/2);
 	
 	Cy_TrigMux_SwTrigger(TRIG_OUT_MUX_10_TCPWM0_TR_IN6, CY_TRIGGER_TWO_CYCLES);
 	
@@ -53,9 +53,9 @@ void DCX_IsrHandler()
 	}
 	
 		/* Get all the enabled pending interrupts */
-    uint32_t interrupts = Cy_TCPWM_GetInterruptStatusMasked(PWM_PRIM_HW, PWM_PRIM_NUM);
-    Cy_TCPWM_ClearInterrupt(PWM_PRIM_HW, PWM_PRIM_NUM, interrupts);
-	NVIC_ClearPendingIRQ(PWM_PRIM_IRQ);
+    uint32_t interrupts = Cy_TCPWM_GetInterruptStatusMasked(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM);
+    Cy_TCPWM_ClearInterrupt(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, interrupts);
+	NVIC_ClearPendingIRQ(PWM_PRI_A_TOP_IRQ);
 }
 
 void DCX_ISOP_init(uint32_t fsw)
@@ -64,8 +64,8 @@ void DCX_ISOP_init(uint32_t fsw)
 	
 	DCX_ISOP_config.phase_shift =6.0f;
 
-	Cy_TCPWM_PWM_Init(PWM_PRIM_HW, PWM_PRIM_NUM, &PWM_PRIM_config);
-	Cy_TCPWM_PWM_Init(PWM_SEC_HW, PWM_SEC_NUM, &PWM_SEC_config);
+	Cy_TCPWM_PWM_Init(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, &PWM_PRI_A_TOP_config);
+	Cy_TCPWM_PWM_Init(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, &PWM_SEC_A_TOP_config);
 
 	//setFsw also sets duty cycle
 	DCX_ISOP_setFsw(fsw);
@@ -75,33 +75,33 @@ void DCX_ISOP_init(uint32_t fsw)
 	
 	//Period0 is only updated via shadow register **WHILE** the counter is running
 	//Right now the counter should not be running and we have to manually write the value to period0
-	Cy_TCPWM_PWM_SetPeriod0(PWM_PRIM_HW, PWM_PRIM_NUM, DCX_ISOP_config.period0);
-	Cy_TCPWM_PWM_SetPeriod0(PWM_SEC_HW, PWM_SEC_NUM, DCX_ISOP_config.period0);
+	Cy_TCPWM_PWM_SetPeriod0(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, DCX_ISOP_config.period0);
+	Cy_TCPWM_PWM_SetPeriod0(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, DCX_ISOP_config.period0);
 
 	DCX_ISOP_setDeadtimePrimary(16);
 	DCX_ISOP_setDeadtimeSecondary(30);
 
-	Cy_TCPWM_PWM_Enable(PWM_PRIM_HW, PWM_PRIM_NUM);
-	Cy_TCPWM_PWM_Enable(PWM_SEC_HW, PWM_SEC_NUM);
+	Cy_TCPWM_PWM_Enable(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM);
+	Cy_TCPWM_PWM_Enable(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM);
 	
 	//setup common swapping
-	Cy_TCPWM_InputTriggerSetup(PWM_PRIM_HW, PWM_PRIM_NUM, CY_TCPWM_INPUT_TR_INDEX_OR_SWAP, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(6));
-	Cy_TCPWM_InputTriggerSetup(PWM_SEC_HW, PWM_SEC_NUM, CY_TCPWM_INPUT_TR_INDEX_OR_SWAP, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(6));
+	Cy_TCPWM_InputTriggerSetup(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, CY_TCPWM_INPUT_TR_INDEX_OR_SWAP, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(6));
+	Cy_TCPWM_InputTriggerSetup(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, CY_TCPWM_INPUT_TR_INDEX_OR_SWAP, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(6));
 
 	//Setup common trigger start
-	Cy_TCPWM_InputTriggerSetup(PWM_PRIM_HW, PWM_PRIM_NUM, CY_TCPWM_INPUT_TR_START, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(7));
-	Cy_TCPWM_InputTriggerSetup(PWM_SEC_HW, PWM_SEC_NUM, CY_TCPWM_INPUT_TR_START, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(7));
+	Cy_TCPWM_InputTriggerSetup(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, CY_TCPWM_INPUT_TR_START, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(7));
+	Cy_TCPWM_InputTriggerSetup(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, CY_TCPWM_INPUT_TR_START, CY_TCPWM_INPUT_RISINGEDGE, CY_TCPWM_INPUT_TRIG(7));
 	
 	//setup common kill
-	Cy_TCPWM_InputTriggerSetup(PWM_PRIM_HW, PWM_PRIM_NUM, CY_TCPWM_INPUT_TR_STOP_OR_KILL, CY_TCPWM_INPUT_LEVEL, CY_TCPWM_INPUT_TRIG(8));
-	Cy_TCPWM_InputTriggerSetup(PWM_SEC_HW, PWM_SEC_NUM, CY_TCPWM_INPUT_TR_STOP_OR_KILL, CY_TCPWM_INPUT_LEVEL, CY_TCPWM_INPUT_TRIG(8));
+	Cy_TCPWM_InputTriggerSetup(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, CY_TCPWM_INPUT_TR_STOP_OR_KILL, CY_TCPWM_INPUT_LEVEL, CY_TCPWM_INPUT_TRIG(8));
+	Cy_TCPWM_InputTriggerSetup(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, CY_TCPWM_INPUT_TR_STOP_OR_KILL, CY_TCPWM_INPUT_LEVEL, CY_TCPWM_INPUT_TRIG(8));
 }
 
 void DCX_enableSpreadSpectrum()
 {	
 	cy_stc_sysint_t interruptus;
 		//...then point ISR to handler...
-	interruptus.intrSrc = PWM_PRIM_IRQ;
+	interruptus.intrSrc = PWM_PRI_A_TOP_IRQ;
 	interruptus.intrPriority = 1;
 	Cy_SysInt_Init(&interruptus, DCX_IsrHandler);
 	NVIC_ClearPendingIRQ(interruptus.intrSrc);
@@ -129,8 +129,8 @@ void DCX_ISOP_setFsw(uint32_t fsw)
 	uint32_t ClkFreq = Cy_SysClk_ClkHfGetFrequency(3);
 	DCX_ISOP_config.period0 = ClkFreq/(fsw);
 
-	Cy_TCPWM_PWM_SetPeriod1(PWM_PRIM_HW, PWM_PRIM_NUM, DCX_ISOP_config.period0);
-	Cy_TCPWM_PWM_SetPeriod1(PWM_SEC_HW, PWM_SEC_NUM, DCX_ISOP_config.period0);
+	Cy_TCPWM_PWM_SetPeriod1(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, DCX_ISOP_config.period0);
+	Cy_TCPWM_PWM_SetPeriod1(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, DCX_ISOP_config.period0);
 
 	//We have to set duty again to account for different compare value	
 	DCX_setDuty(DCX_ISOP_config.duty);
@@ -146,11 +146,11 @@ void DCX_setDuty(float duty)
 	DCX_ISOP_config.duty = duty;
 	uint16_t compare = DCX_ISOP_config.period0 * duty;
 	
-	Cy_TCPWM_PWM_SetCompare0Val(PWM_PRIM_HW, PWM_PRIM_NUM, compare);
-    Cy_TCPWM_PWM_SetCompare0Val(PWM_SEC_HW, PWM_SEC_NUM, compare);
+	Cy_TCPWM_PWM_SetCompare0Val(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, compare);
+    Cy_TCPWM_PWM_SetCompare0Val(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, compare);
 	//Unsure about this...
-	Cy_TCPWM_PWM_SetCompare0BufVal(PWM_PRIM_HW, PWM_PRIM_NUM, compare);
-    Cy_TCPWM_PWM_SetCompare0BufVal(PWM_SEC_HW, PWM_SEC_NUM, compare);
+	Cy_TCPWM_PWM_SetCompare0BufVal(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, compare);
+    Cy_TCPWM_PWM_SetCompare0BufVal(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, compare);
     
 	Cy_TrigMux_SwTrigger(TRIG_OUT_MUX_10_TCPWM0_TR_IN6, CY_TRIGGER_TWO_CYCLES);		
 }
@@ -159,29 +159,29 @@ void DCX_setDuty(float duty)
 void DCX_setPhaseShift(uint32_t phaseShiftCounts)
 {
 	//Primary as reference
-	Cy_TCPWM_PWM_SetCounter(PWM_PRIM_HW, PWM_PRIM_NUM, 0);
+	Cy_TCPWM_PWM_SetCounter(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, 0);
 	//Secondary set counter offset
-	Cy_TCPWM_PWM_SetCounter(PWM_SEC_HW, PWM_SEC_NUM, phaseShiftCounts);	
+	Cy_TCPWM_PWM_SetCounter(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, phaseShiftCounts);	
 }
 
 void DCX_ISOP_setDeadtimePrimary(uint32_t deadtime_Prim)
 {
 	//overwrite normal and buffered deadtime with same value
 	//because shadow transfer is not needed for deadtime
-	Cy_TCPWM_PWM_PWMDeadTime(PWM_PRIM_HW, PWM_PRIM_NUM, deadtime_Prim);
-	Cy_TCPWM_PWM_PWMDeadTimeBuff(PWM_PRIM_HW, PWM_PRIM_NUM, deadtime_Prim);
-	Cy_TCPWM_PWM_PWMDeadTimeN(PWM_PRIM_HW, PWM_PRIM_NUM, deadtime_Prim);
-	Cy_TCPWM_PWM_PWMDeadTimeBuffN(PWM_PRIM_HW, PWM_PRIM_NUM, deadtime_Prim);
+	Cy_TCPWM_PWM_PWMDeadTime(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, deadtime_Prim);
+	Cy_TCPWM_PWM_PWMDeadTimeBuff(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, deadtime_Prim);
+	Cy_TCPWM_PWM_PWMDeadTimeN(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, deadtime_Prim);
+	Cy_TCPWM_PWM_PWMDeadTimeBuffN(PWM_PRI_A_TOP_HW, PWM_PRI_A_TOP_NUM, deadtime_Prim);
 
 	DCX_ISOP_config.deadtime_Prim = deadtime_Prim;
 }
 
 void DCX_ISOP_setDeadtimeSecondary(uint32_t deadtime_Sec)
 {
-	Cy_TCPWM_PWM_PWMDeadTime(PWM_SEC_HW, PWM_SEC_NUM, deadtime_Sec);
-	Cy_TCPWM_PWM_PWMDeadTimeBuff(PWM_SEC_HW, PWM_SEC_NUM, deadtime_Sec);
-	Cy_TCPWM_PWM_PWMDeadTimeN(PWM_SEC_HW, PWM_SEC_NUM, deadtime_Sec);
-	Cy_TCPWM_PWM_PWMDeadTimeBuffN(PWM_SEC_HW, PWM_SEC_NUM, deadtime_Sec);
+	Cy_TCPWM_PWM_PWMDeadTime(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, deadtime_Sec);
+	Cy_TCPWM_PWM_PWMDeadTimeBuff(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, deadtime_Sec);
+	Cy_TCPWM_PWM_PWMDeadTimeN(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, deadtime_Sec);
+	Cy_TCPWM_PWM_PWMDeadTimeBuffN(PWM_SEC_A_TOP_HW, PWM_SEC_A_TOP_NUM, deadtime_Sec);
 	
 
 	DCX_ISOP_config.deadtime_Sec = deadtime_Sec;
