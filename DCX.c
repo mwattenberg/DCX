@@ -349,49 +349,11 @@ void DCX_UpdatePhaseShift(DCX_phase_t* phase)
 }
 
 void DCX_setDeadtime(DCX_pwm_channel_t* channel, uint32_t counts)
-{
-//    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
-//    {
-//        DCX_phase_t* phase = DCX_allPhases[i];
-//        phase->PWM_PRI.deadtime = counts;
-//
-//        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_PRI.hw, phase->PWM_PRI.num, counts);
-//        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_PRI.hw, phase->PWM_PRI.num, counts);
-//    }
-	
+{	
 	channel->deadtime = counts;
     Cy_TCPWM_PWM_PWMDeadTime(channel->hw, channel->num, counts);
-    Cy_TCPWM_PWM_PWMDeadTimeN(channel->hw, channel->num, counts);
-
-    
+    Cy_TCPWM_PWM_PWMDeadTimeN(channel->hw, channel->num, counts);   
 }
-
-//void DCX_setDeadtimeSecondary(uint32_t counts)
-//{
-//    uint32_t hrCounts = counts << 6;
-//
-//    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
-//    {
-//        DCX_phase_t* phase = DCX_allPhases[i];
-//        phase->PWM_SEC.deadtime = hrCounts;
-//
-//        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_SEC.hw, phase->PWM_SEC.num, hrCounts);
-//        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_SEC.hw, phase->PWM_SEC.num, hrCounts);
-//    }
-//}
-
-void DCX_setDeadtimeHRSecondary(uint32_t counts)
-{
-    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
-    {
-        DCX_phase_t* phase = DCX_allPhases[i];
-        phase->PWM_SEC.deadtime = counts;
-
-        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_SEC.hw, phase->PWM_SEC.num, counts);
-        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_SEC.hw, phase->PWM_SEC.num, counts);
-    }
-}
-
 
 void DCX_TriggerStart()
 {
