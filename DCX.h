@@ -15,7 +15,6 @@ typedef struct {
     TCPWM_Type* hw;
     uint32_t num;
     cy_stc_tcpwm_pwm_config_t* config;
-    float phaseShift;
     uint32_t deadtime;
 } DCX_pwm_channel_t;
 
@@ -23,27 +22,32 @@ typedef struct DCX_phase
 {
     float duty;
     uint32_t fsw;
-    uint16_t period;
-    uint16_t compare;
+    uint32_t period;
+    uint32_t compare;
     bool isRunning;
+    int32_t phaseShift_PrimaryToSecondary;	//in ticks
+	float phaseShift_PhaseToPhase;			//in degree
     // PWM channels for primary and secondary side
     DCX_pwm_channel_t PWM_PRI;
     DCX_pwm_channel_t PWM_SEC;
     
 } DCX_phase_t;
 
-extern DCX_phase_t DCX_phase;
-
-#define TIMER_SOFT_START_IRQ tcpwm_0_interrupts_2_IRQn
 
 #define DCX_NUMBER_OF_PHASES 4
 
-extern DCX_phase_t Phase_A_TOP;
-extern DCX_phase_t Phase_A_BOT;
-extern DCX_phase_t Phase_B_TOP;
-extern DCX_phase_t Phase_B_BOT;
+extern DCX_phase_t DCX_phase[DCX_NUMBER_OF_PHASES];
 
-extern DCX_phase_t* DCX_allPhases[DCX_NUMBER_OF_PHASES];
+#define TIMER_SOFT_START_IRQ tcpwm_0_interrupts_2_IRQn
+
+
+
+//extern DCX_phase_t Phase_A_TOP;
+//extern DCX_phase_t Phase_A_BOT;
+//extern DCX_phase_t Phase_B_TOP;
+//extern DCX_phase_t Phase_B_BOT;
+
+//extern DCX_phase_t* DCX_allPhases[DCX_NUMBER_OF_PHASES];
 
 void DCX_init();
 void DCX_TriggerStart();

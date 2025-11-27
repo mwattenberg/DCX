@@ -25,12 +25,12 @@
 
 #define DCX_MaxDeadtime (Phase_A_TOP.period / 2 + 2)
 
-DCX_phase_t Phase_A_TOP;
-DCX_phase_t Phase_A_BOT;
-DCX_phase_t Phase_B_TOP;
-DCX_phase_t Phase_B_BOT;
+//DCX_phase_t Phase_A_TOP;
+//DCX_phase_t Phase_A_BOT;
+//DCX_phase_t Phase_B_TOP;
+//DCX_phase_t Phase_B_BOT;
 
-DCX_phase_t* DCX_allPhases[DCX_NUMBER_OF_PHASES];
+DCX_phase_t DCX_phase[DCX_NUMBER_OF_PHASES];
 
 //Non "public" functions
 void DCX_disconntectOutputs(DCX_phase_t* phase);
@@ -75,8 +75,6 @@ static inline void DCX_SetupTriggerMux(DCX_phase_t* phase)
                                 CY_TCPWM_INPUT_RISINGEDGE,
                                 CY_TCPWM_INPUT_TRIG(DCX_TRIGGER_RELOAD_INDEX));
 }
-
-
 
 void ISR_SoftStartPrim()
 {
@@ -147,10 +145,21 @@ void ISR_SoftStartSec()
 void DCX_init(void)
 {
 	// Assign hardware and counter numbers to phase structs
-	Phase_A_TOP.PWM_PRI.hw = PWM_PRI_A_TOP_HW;
-	Phase_A_TOP.PWM_PRI.num = PWM_PRI_A_TOP_NUM;
-	Phase_A_TOP.PWM_PRI.config = &PWM_PRI_A_TOP_config;
-	Phase_A_TOP.PWM_PRI.phaseShift = 0.0f;
+	
+	DCX_phase[0].PWM_PRI.hw = PWM_PRI_A_TOP_HW;
+	DCX_phase[0].PWM_PRI.num = PWM_PRI_A_TOP_NUM;
+	DCX_phase[0].PWM_PRI.config = &PWM_PRI_A_TOP_config;
+	DCX_phase[0].phaseShift_PhaseToPhase = 0.0f;
+	DCX_phase[0].phaseShift_PrimaryToSecondary = 5; 
+	
+	//...
+	DCX_phase[1].phaseShift_PhaseToPhase = -90.0f;
+	DCX_phase[1].phaseShift_PrimaryToSecondary = 5;
+	
+//	Phase_A_TOP.PWM_PRI.hw = PWM_PRI_A_TOP_HW;
+//	Phase_A_TOP.PWM_PRI.num = PWM_PRI_A_TOP_NUM;
+//	Phase_A_TOP.PWM_PRI.config = &PWM_PRI_A_TOP_config;
+//	Phase_A_TOP.PWM_PRI.phaseShift = 0.0f;
 
 	Phase_A_TOP.PWM_SEC.hw = PWM_SEC_A_TOP_HW;
 	Phase_A_TOP.PWM_SEC.num = PWM_SEC_A_TOP_NUM;
@@ -190,32 +199,25 @@ void DCX_init(void)
     Phase_B_BOT.PWM_SEC.config = &PWM_SEC_B_BOT_config;
     Phase_B_BOT.PWM_SEC.phaseShift = Phase_B_BOT.PWM_PRI.phaseShift + 6.0f;   
     
-    DCX_allPhases[0] = &Phase_A_TOP;
-    DCX_allPhases[1] = &Phase_A_BOT;
-    DCX_allPhases[2] = &Phase_B_TOP;
-    DCX_allPhases[3] = &Phase_B_BOT;
+//     = &Phase_A_TOP;
+//    DCX_allPhases[1] = &Phase_A_BOT;
+//    DCX_allPhases[2] = &Phase_B_TOP;
+//    DCX_allPhases[3] = &Phase_B_BOT;
 
     for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
     {
-       DCX_PWM_init(DCX_allPhases[i]);
+       DCX_PWM_init(DCX_phase[i]);
+       DCX_disconntectOutputs(DCX_phase[i]);
+       DCX_setFsw(DCX_phase[i], 800000);
+       //same for duty
+       DCX_UpdatePhaseShift(DCX_phase[i]);
+       
+   		DCX_setDeadtime(DCX_phase[i].PWM_PRI,64*10);
+		DCX_setDeadtime(DCX_phase[i].PWM_SEC,10);
     }
     
-    /*
-    DCX_disconntectOutputs(&Phase_A_TOP);
-    DCX_disconntectOutputs(&Phase_A_BOT);
-    DCX_disconntectOutputs(&Phase_B_TOP);
-    DCX_disconntectOutputs(&Phase_B_BOT);
-    */
 
-    
-    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
-    {
-         DCX_disconntectOutputs(DCX_allPhases[i]);
-    }
 
-   
-
-    DCX_setFsw(800000);
 
     // Set initial phase shift for each phase
 /*	DCX_UpdatePhaseShift(&Phase_A_TOP);
@@ -280,29 +282,40 @@ void DCX_connectOutputs(DCX_phase_t* phase)
     Cy_TCPWM_PWM_Configure_LineSelect(phase->PWM_SEC.hw, phase->PWM_SEC.num,CY_TCPWM_OUTPUT_PWM_SIGNAL,CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL);
 }
 
-void DCX_setFsw(uint32_t fsw)
+void DCX_setFsw(DCX_phase_t* phase, uint32_t fsw)
 {
+	//For PWM it's always ClkHf3
     uint32_t ClkFreq = Cy_SysClk_ClkHfGetFrequency(3);
-    uint32_t period  = ClkFreq / fsw;
+    uint32_t period = ClkFreq / fsw;
     uint32_t compare = period / 2;
-
-    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
+    
+    // update cached values
+    phase->fsw     = fsw;
+    phase->period  = period;
+    phase->compare = compare;
+    
+    if(phase->PWM_PRI.config->hrpwm_enable)
     {
-        DCX_phase_t* phase = DCX_allPhases[i];
-
-        // update cached values
-        phase->fsw     = fsw;
-        phase->period  = period;
-        phase->compare = compare;
-
-        // primary: normal timer
-        Cy_TCPWM_PWM_SetPeriod0   (phase->PWM_PRI.hw, phase->PWM_PRI.num,   period);
-        Cy_TCPWM_PWM_SetCompare0Val(phase->PWM_PRI.hw, phase->PWM_PRI.num, compare);
-
-        // secondary: HRPWM uses 6-bit extension -> shift left by 6
-        Cy_TCPWM_PWM_SetPeriod0   (phase->PWM_SEC.hw, phase->PWM_SEC.num,   period);
-        Cy_TCPWM_PWM_SetCompare0Val(phase->PWM_SEC.hw, phase->PWM_SEC.num, compare);
-    }
+		Cy_TCPWM_PWM_SetPeriod0   (phase->PWM_PRI.hw, phase->PWM_PRI.num,   64*period); //Use define instead of magic number
+		Cy_TCPWM_PWM_SetCompare0Val(phase->PWM_PRI.hw, phase->PWM_PRI.num, 64*compare);
+	}
+	else
+	{
+		Cy_TCPWM_PWM_SetPeriod0   (phase->PWM_PRI.hw, phase->PWM_PRI.num,   period);
+		Cy_TCPWM_PWM_SetCompare0Val(phase->PWM_PRI.hw, phase->PWM_PRI.num, compare);
+	}
+	
+	
+	if(phase->PWM_SEC.config->hrpwm_enable)
+	{
+		Cy_TCPWM_PWM_SetPeriod0   (phase->PWM_SEC.hw, phase->PWM_SEC.num,   64*period);
+    	Cy_TCPWM_PWM_SetCompare0Val(phase->PWM_SEC.hw, phase->PWM_SEC.num, 64*compare);
+	}
+	else 
+	{
+		Cy_TCPWM_PWM_SetPeriod0   (phase->PWM_SEC.hw, phase->PWM_SEC.num,   period);
+    	Cy_TCPWM_PWM_SetCompare0Val(phase->PWM_SEC.hw, phase->PWM_SEC.num, compare);
+	}
 }
 
 
@@ -323,39 +336,49 @@ void DCX_UpdatePhaseShift(DCX_phase_t* phase)
     // Calculate counter value for phase shift (assuming DCX_PWM_PERIOD is 360°)
     uint32_t counterValuePri;
     uint32_t counterValueSec;
-    float shiftPrim = fmodf((360.0f + phase->PWM_PRI.phaseShift), 360.0f);
-    float shiftSec = fmodf((360.0f + phase->PWM_SEC.phaseShift), 360.0f);
-    counterValuePri = (uint32_t)(phase->period * shiftPrim / 360.0f );
-    counterValueSec = (uint32_t)(phase->period * shiftSec / 360.0f );
+    
+    //calculate positive phase shift for negative values
+    float phaseToPhase = fmodf((360.0f + phase->phaseShift_PhaseToPhase), 360.0f);
+    
+    //calculate counter value
+    counterValuePri = (uint32_t)(phase->period * shiftPrim / 360.0f);
+    counterValueSec = (uint32_t)(phase->period * shiftSec / 360.0f + phase->phaseShift_PrimaryToSecondary);
+    
     Cy_TCPWM_PWM_SetCounter(phase->PWM_PRI.hw, phase->PWM_PRI.num, counterValuePri);
     Cy_TCPWM_PWM_SetCounter(phase->PWM_SEC.hw, phase->PWM_SEC.num, counterValueSec);
 }
 
-void DCX_setDeadtimePrimary(uint32_t counts)
+void DCX_setDeadtime(DCX_pwm_channel_t* channel, uint32_t counts)
 {
-    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
-    {
-        DCX_phase_t* phase = DCX_allPhases[i];
-        phase->PWM_PRI.deadtime = counts;
+//    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
+//    {
+//        DCX_phase_t* phase = DCX_allPhases[i];
+//        phase->PWM_PRI.deadtime = counts;
+//
+//        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_PRI.hw, phase->PWM_PRI.num, counts);
+//        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_PRI.hw, phase->PWM_PRI.num, counts);
+//    }
+	
+	channel->deadtime = counts;
+    Cy_TCPWM_PWM_PWMDeadTime(channel->hw, channel->num, counts);
+    Cy_TCPWM_PWM_PWMDeadTimeN(channel->hw, channel->num, counts);
 
-        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_PRI.hw, phase->PWM_PRI.num, counts);
-        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_PRI.hw, phase->PWM_PRI.num, counts);
-    }
+    
 }
 
-void DCX_setDeadtimeSecondary(uint32_t counts)
-{
-    uint32_t hrCounts = counts << 6;
-
-    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
-    {
-        DCX_phase_t* phase = DCX_allPhases[i];
-        phase->PWM_SEC.deadtime = hrCounts;
-
-        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_SEC.hw, phase->PWM_SEC.num, hrCounts);
-        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_SEC.hw, phase->PWM_SEC.num, hrCounts);
-    }
-}
+//void DCX_setDeadtimeSecondary(uint32_t counts)
+//{
+//    uint32_t hrCounts = counts << 6;
+//
+//    for (uint32_t i = 0; i < DCX_NUMBER_OF_PHASES; i++)
+//    {
+//        DCX_phase_t* phase = DCX_allPhases[i];
+//        phase->PWM_SEC.deadtime = hrCounts;
+//
+//        Cy_TCPWM_PWM_PWMDeadTime (phase->PWM_SEC.hw, phase->PWM_SEC.num, hrCounts);
+//        Cy_TCPWM_PWM_PWMDeadTimeN(phase->PWM_SEC.hw, phase->PWM_SEC.num, hrCounts);
+//    }
+//}
 
 void DCX_setDeadtimeHRSecondary(uint32_t counts)
 {
