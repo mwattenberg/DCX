@@ -53,9 +53,6 @@
                         <Alias value="CYBSP_DEBUG_UART_TX"/>
                     </Aliases>
                 </Block>
-                <Block location="ioss[0].port[9].pin[2]"/>
-                <Block location="ioss[0].port[9].pin[3]"/>
-                <Block location="ioss[0].port[9].pin[4]"/>
                 <Block location="ioss[0].port[9].pin[5]">
                     <Aliases>
                         <Alias value="CYBSP_USER_LED"/>
@@ -766,10 +763,10 @@
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
                 </Personality>
-                <Personality template="mxs40pwm_ver2" version="1.0" instance="OIOFsNTeRxg">
-                    <Block location="tcpwm[0].group[1].cnt[0]" locked="true">
+                <Personality template="mxs40pwm_ver2" version="1.0" instance="xE4LnGgeONw">
+                    <Block location="tcpwm[0].group[0].cnt[3]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_PRI_A_TOP"/>
+                            <Alias value="PWM_PRI_PHASE2"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -794,7 +791,7 @@
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
-                        <Param id="InterruptTC" value="true"/>
+                        <Param id="InterruptTC" value="false"/>
                         <Param id="InvertPwm" value="false"/>
                         <Param id="InvertPwm_n" value="false"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -804,7 +801,74 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
+                        <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
+                        <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
+                        <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
+                        <Param id="SwapInput" value="CY_TCPWM_INPUT_DISABLED"/>
+                        <Param id="SwapUnderflowOverflow" value="false"/>
+                        <Param id="TapsEnabled" value="45"/>
+                        <Param id="buff_line_out_source" value="CY_TCPWM_OUTPUT_PWM_SIGNAL"/>
+                        <Param id="buff_linecompl_out_source" value="CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL"/>
+                        <Param id="debugModeFreezeEn" value="false"/>
+                        <Param id="debugModeSuspendEn" value="false"/>
+                        <Param id="enable_hrpwm" value="true"/>
+                        <Param id="gf_enable" value="false"/>
+                        <Param id="hrpwm_input_clock" value="CY_TCPWM_HRPWM_FREQ_200MHZ_OR_240MHZ"/>
+                        <Param id="inFlash" value="true"/>
+                        <Param id="kill_line_polarity" value="CY_TCPWM_LINEOUT_AND_LINECMPOUT_IS_LOW"/>
+                        <Param id="limiter" value="CY_TCPWM_DITHERING_LIMITER_7"/>
+                        <Param id="line_out_source" value="CY_TCPWM_OUTPUT_PWM_SIGNAL"/>
+                        <Param id="linecompl_out_source" value="CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL"/>
+                        <Param id="pwmstoponkill" value="true"/>
+                        <Param id="pwmsynckill" value="false"/>
+                        <Param id="pwmsynckilldt" value="false"/>
+                        <Param id="pwmtcsynckilldt" value="false"/>
+                        <Param id="reload_line_sel" value="false"/>
+                        <Param id="swap_enable" value="false"/>
+                        <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
+                        <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
+                    </Parameters>
+                </Personality>
+                <Personality template="mxs40pwm_ver2" version="1.0" instance="hzF7RMywGYg">
+                    <Block location="tcpwm[0].group[1].cnt[0]" locked="true">
+                        <Aliases>
+                            <Alias value="PWM_PRI_PHASE1"/>
+                        </Aliases>
+                    </Block>
+                    <Parameters>
+                        <Param id="ClockPrescaler" value="CY_TCPWM_PWM_PRESCALER_DIVBY_1"/>
+                        <Param id="Compare0" value="16384"/>
+                        <Param id="Compare0MatchDown" value="false"/>
+                        <Param id="Compare0MatchUp" value="true"/>
+                        <Param id="Compare1" value="16384"/>
+                        <Param id="Compare1MatchDown" value="false"/>
+                        <Param id="Compare1MatchUp" value="true"/>
+                        <Param id="Compare2" value="16384"/>
+                        <Param id="Compare3" value="16384"/>
+                        <Param id="CountInput" value="CY_TCPWM_INPUT_DISABLED"/>
+                        <Param id="DeadClocks" value="0"/>
+                        <Param id="DeadClocksBuff" value="0"/>
+                        <Param id="DeadClocksBuff_compl" value="0"/>
+                        <Param id="DeadClocks_compl" value="0"/>
+                        <Param id="Duty_Dithering" value="128"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
+                        <Param id="ImmediateKill" value="false"/>
+                        <Param id="InterruptCC0" value="false"/>
+                        <Param id="InterruptCC1" value="false"/>
+                        <Param id="InterruptTC" value="false"/>
+                        <Param id="InvertPwm" value="false"/>
+                        <Param id="InvertPwm_n" value="false"/>
+                        <Param id="Kill0Input" value="CY_TCPWM_INPUT_DISABLED"/>
+                        <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
+                        <Param id="Period0" value="32768"/>
+                        <Param id="Period1" value="32768"/>
+                        <Param id="Period_Dithering" value="128"/>
+                        <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
+                        <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -829,7 +893,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -837,7 +901,7 @@
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="dzuDI_2VIlo">
                     <Block location="tcpwm[0].group[1].cnt[1]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_SEC_A_TOP"/>
+                            <Alias value="PWM_SEC_PHASE1"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -856,9 +920,9 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="0"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
@@ -872,7 +936,7 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -897,75 +961,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
-                        <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
-                        <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
-                    </Parameters>
-                </Personality>
-                <Personality template="mxs40pwm_ver2" version="1.0" instance="lgLKIMnYnrY">
-                    <Block location="tcpwm[0].group[1].cnt[2]" locked="true">
-                        <Aliases>
-                            <Alias value="PWM_PRI_A_BOT"/>
-                        </Aliases>
-                    </Block>
-                    <Parameters>
-                        <Param id="ClockPrescaler" value="CY_TCPWM_PWM_PRESCALER_DIVBY_1"/>
-                        <Param id="Compare0" value="16384"/>
-                        <Param id="Compare0MatchDown" value="false"/>
-                        <Param id="Compare0MatchUp" value="true"/>
-                        <Param id="Compare1" value="16384"/>
-                        <Param id="Compare1MatchDown" value="false"/>
-                        <Param id="Compare1MatchUp" value="true"/>
-                        <Param id="Compare2" value="16384"/>
-                        <Param id="Compare3" value="16384"/>
-                        <Param id="CountInput" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="DeadClocks" value="0"/>
-                        <Param id="DeadClocksBuff" value="0"/>
-                        <Param id="DeadClocksBuff_compl" value="0"/>
-                        <Param id="DeadClocks_compl" value="0"/>
-                        <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
-                        <Param id="ImmediateKill" value="false"/>
-                        <Param id="InterruptCC0" value="false"/>
-                        <Param id="InterruptCC1" value="false"/>
-                        <Param id="InterruptTC" value="false"/>
-                        <Param id="InvertPwm" value="false"/>
-                        <Param id="InvertPwm_n" value="false"/>
-                        <Param id="Kill0Input" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="Period0" value="32768"/>
-                        <Param id="Period1" value="32768"/>
-                        <Param id="Period_Dithering" value="128"/>
-                        <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
-                        <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
-                        <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
-                        <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="SwapInput" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="SwapUnderflowOverflow" value="false"/>
-                        <Param id="TapsEnabled" value="45"/>
-                        <Param id="buff_line_out_source" value="CY_TCPWM_OUTPUT_PWM_SIGNAL"/>
-                        <Param id="buff_linecompl_out_source" value="CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL"/>
-                        <Param id="debugModeFreezeEn" value="false"/>
-                        <Param id="debugModeSuspendEn" value="false"/>
-                        <Param id="dithering_mode" value="CY_TCPWM_DITHERING_DISABLE"/>
-                        <Param id="enable_hrpwm" value="false"/>
-                        <Param id="gf_enable" value="false"/>
-                        <Param id="hrpwm_input_clock" value="CY_TCPWM_HRPWM_FREQ_80MHZ_OR_100MHZ"/>
-                        <Param id="inFlash" value="true"/>
-                        <Param id="kill_line_polarity" value="CY_TCPWM_LINEOUT_AND_LINECMPOUT_IS_LOW"/>
-                        <Param id="limiter" value="CY_TCPWM_DITHERING_LIMITER_7"/>
-                        <Param id="line_out_source" value="CY_TCPWM_OUTPUT_PWM_SIGNAL"/>
-                        <Param id="linecompl_out_source" value="CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL"/>
-                        <Param id="pwmstoponkill" value="true"/>
-                        <Param id="pwmsynckill" value="false"/>
-                        <Param id="pwmsynckilldt" value="false"/>
-                        <Param id="pwmtcsynckilldt" value="false"/>
-                        <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -973,7 +969,7 @@
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="4RltbsKV_7k">
                     <Block location="tcpwm[0].group[1].cnt[3]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_SEC_A_BOT"/>
+                            <Alias value="PWM_SEC_PHASE2"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -992,9 +988,9 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="0"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
@@ -1008,7 +1004,7 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -1033,7 +1029,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -1041,7 +1037,7 @@
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="k10YPBzqnFQ">
                     <Block location="tcpwm[0].group[1].cnt[4]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_PRI_B_TOP"/>
+                            <Alias value="PWM_PRI_PHASE3"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -1060,9 +1056,9 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="0"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
@@ -1076,7 +1072,7 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -1101,7 +1097,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -1109,7 +1105,7 @@
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="I9GRSwY4xS4">
                     <Block location="tcpwm[0].group[1].cnt[5]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_SEC_B_TOP"/>
+                            <Alias value="PWM_SEC_PHASE3"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -1128,9 +1124,9 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="0"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
@@ -1144,7 +1140,7 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -1169,7 +1165,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -1177,7 +1173,7 @@
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="cUS009X9Gl8">
                     <Block location="tcpwm[0].group[1].cnt[6]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_PRI_B_BOT"/>
+                            <Alias value="PWM_PRI_PHASE4"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -1196,9 +1192,9 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="0"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
@@ -1212,7 +1208,7 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -1237,7 +1233,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -1245,7 +1241,7 @@
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="QKlhxEiLFHE">
                     <Block location="tcpwm[0].group[1].cnt[7]" locked="true">
                         <Aliases>
-                            <Alias value="PWM_SEC_B_BOT"/>
+                            <Alias value="PWM_SEC_PHASE4"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -1264,9 +1260,9 @@
                         <Param id="DeadClocksBuff_compl" value="0"/>
                         <Param id="DeadClocks_compl" value="0"/>
                         <Param id="Duty_Dithering" value="128"/>
-                        <Param id="EnableCompare0Swap" value="false"/>
-                        <Param id="EnableCompare1Swap" value="false"/>
-                        <Param id="EnablePeriodSwap" value="false"/>
+                        <Param id="EnableCompare0Swap" value="true"/>
+                        <Param id="EnableCompare1Swap" value="true"/>
+                        <Param id="EnablePeriodSwap" value="true"/>
                         <Param id="ImmediateKill" value="false"/>
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
@@ -1280,7 +1276,7 @@
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
                         <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
-                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
+                        <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_DEADTIME"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>
@@ -1305,7 +1301,7 @@
                         <Param id="pwmsynckilldt" value="false"/>
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
-                        <Param id="swap_enable" value="false"/>
+                        <Param id="swap_enable" value="true"/>
                         <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                         <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_DISABLED"/>
                     </Parameters>
@@ -1378,11 +1374,11 @@
                 </Net>
                 <Net>
                     <Port name="ioss[0].port[9].pin[0].digital_out[0]"/>
-                    <Port name="tcpwm[0].group[1].cnt[2].tr_line_compl[0]"/>
+                    <Port name="tcpwm[0].group[0].cnt[3].tr_line_compl[0]"/>
                 </Net>
                 <Net>
                     <Port name="ioss[0].port[9].pin[1].digital_out[0]"/>
-                    <Port name="tcpwm[0].group[1].cnt[2].tr_line[0]"/>
+                    <Port name="tcpwm[0].group[0].cnt[3].tr_line[0]"/>
                 </Net>
                 <Net>
                     <Port name="peri[0].group[5].div_8[1].clk[0]"/>
@@ -1392,9 +1388,9 @@
                 </Net>
                 <Net>
                     <Port name="peri[0].group[5].div_8[0].clk[0]"/>
+                    <Port name="tcpwm[0].group[0].cnt[3].clock_counter_en[0]"/>
                     <Port name="tcpwm[0].group[1].cnt[0].clock_counter_en[0]"/>
                     <Port name="tcpwm[0].group[1].cnt[1].clock_counter_en[0]"/>
-                    <Port name="tcpwm[0].group[1].cnt[2].clock_counter_en[0]"/>
                     <Port name="tcpwm[0].group[1].cnt[3].clock_counter_en[0]"/>
                     <Port name="tcpwm[0].group[1].cnt[4].clock_counter_en[0]"/>
                     <Port name="tcpwm[0].group[1].cnt[5].clock_counter_en[0]"/>
